@@ -1,0 +1,11 @@
+<% include partials/header %>
+
+<h1>City</h1>
+
+<% results.forEach(function(result){ %>
+	<p><%= result.Name %> - <%= result.District %> - <%= result.Population %> </p>	
+<% }) %>
+	
+
+
+<% include partials/footer %>
