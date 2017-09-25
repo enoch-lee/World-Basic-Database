@@ -1,12 +1,39 @@
 <% include partials/header %>
 <div class="container">
+
 	<div class="row">
-		<div class="col-md-4 col-md-offset-3">
-			<form action = '/cities' method = 'POST'>
+
+		<div class="col-md-12 col-md-offset-2">
+			<img src="https://i.imgur.com/KMKVazl.jpg">
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-4 col-md-offset-2">
+			<form action = '/country' method = 'POST'>
 				<div class="form-group">
-					<label>Find Cities of a Country</label>
+					<label>Explore a Country</label>
 					<div class="input-group">
-						<input type="text" class="form-control" name="country_name" placeholder="Country">
+						<input type="text" class="form-control" name="countryName" placeholder="Country" required>
+						<span class=" = input-group-btn">
+							<button class="btn btn-primary">Search</button>
+						</span>
+					</div>
+					<p></p>
+					<a href= '/allCountries'>Show All</a>
+				</div>
+			</form>
+		</div>
+
+
+		<div class="col-md-4 col-md-offset-1">
+			<form action = '/city' method = 'POST'>
+				<div class="form-group">
+					<label>Explore a City</label>
+					<div class="input-group">
+						<input type="text" class="form-control" name="cityName" placeholder="City" required>
 						<span class=" = input-group-btn">
 							<button class="btn btn-primary">Search</button>
 						</span>
@@ -14,14 +41,33 @@
 				</div>
 			</form>
 		</div>
+
 	</div>
+
 	<div class="row">
-		<div class="col-md-4 col-md-offset-3">
+
+		<div class="col-md-4 col-md-offset-2">
+			<form action = '/cities' method = 'POST'>
+				<div class="form-group">
+					<label>Find Cities of a Country</label>
+					<div class="input-group">
+						<input type="text" class="form-control" name="countryName" placeholder="Country" required>
+						<span class=" = input-group-btn">
+							<button class="btn btn-primary">Search</button>
+						</span>
+					</div>
+					<p></p>
+					<a href= '/new_city'>Add a City</a>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-4 col-md-offset-1">
 			<form action = '/language' method = 'POST'>
 				<div class="form-group">
 					<label>Find Languges</label>
 					<div class="input-group">
-						<input type="text" class="form-control" name="language" placeholder="Languge">
+						<input type="text" class="form-control" name="language" placeholder="Languge" required>
 						<span class=" = input-group-btn">
 							<button class="btn btn-primary">Search</button>
 						</span>

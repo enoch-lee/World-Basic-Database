@@ -1,11 +1,61 @@
 <% include partials/header %>
 
-<h1>City</h1>
+<% var i = 1 %>
+<div class="container">
+	<h1 style="text-align: center"><%= countryName %></h1>
+	<table id = 'data_table' class="table table-sm table-hover table-striped" style="width: 100%; margin: auto">
+		<thead>
+			<tr>
+				<th style="width: 10%">#</th>
+				<th style="width: 30%">City</th>
+				<th style="width: 30%">Ditrict</th>
+				<th style="width: 30%">Population</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% results.forEach(function(result){ %>
+			<tr>
+				<td><%= i++ %></td>
+				<td><a class ="city_name" href = "" ><%= result.Name %></a></td>
+				<td><a class ="district_name" href = "" ><%= result.District %></a></td>
+				<td><%= result.Population %></td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+	<p><a href="/cities/delete">Delete a City</a></p> <a href='/'>Back</a>
+</div>
 
-<% results.forEach(function(result){ %>
-	<p><%= result.Name %> - <%= result.District %> - <%= result.Population %> </p>	
-<% }) %>
-	
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
 
+$(document).ready(function(){
+	$("#data_table").dataTable();
+});
+
+$('td a.city_name').each(function(){
+	let text = $(this).text();
+	let cityName = '';
+	for(let i = 0; i < text.length; ++i){
+		if(text[i] === '(' || text[i] ==='[') break;
+		cityName += text[i];
+	}
+	let city_wiki = 'https://en.wikipedia.org/wiki/' + cityName;
+	$(this).attr('href', city_wiki);
+})
+
+$('td a.district_name').each(function(){
+	let text = $(this).text();
+	let districtName = '';
+	for(let i = 0; i < text.length; ++i){
+		if(text[i] === '(' || text[i] ==='[') break;
+		districtName += text[i];
+	}
+	let districtWiki = 'https://en.wikipedia.org/wiki/' + districtName;
+	$(this).attr('href', districtWiki);
+})
+
+</script>
 
 <% include partials/footer %>

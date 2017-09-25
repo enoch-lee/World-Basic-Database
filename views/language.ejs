@@ -1,11 +1,57 @@
 <% include partials/header %>
 
-<h1>Language</h1>
+<%var i = 1%>
+<div class="container">
+	<h1 style="text-align: center"><%= language %></h1>
+	<table id = 'data_table' class="table table-sm table-hover table-striped" style="width: 100%; margin: auto">
+		<thead>
+			<tr>
+				<th style="width: 10%">#</th>
+				<th style="width: 30%">Country</th>
+				<th style="width: 30%">Percentage</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% results.forEach(function(result){ %>
+			<tr>
+				<td><%= i++ %></td>
+				<td><a class = 'country_name'><%= result.Name %></a> <span class="flag-icon"></span> <span class="glyphicon"></span></td>
+				<td><%= result.Percentage %></td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+	<p><span class="glyphicon glyphicon-ok-sign"></span> means it is an official language.</p>
+	<a href='/'>Back</a>
+</div>
 
-<% results.forEach(function(result){ %>
-	<p><%= result.Name %> </p>	
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
+
+<% results.forEach(function(result, index){ %>
+	if(<%- JSON.stringify(result.IsOfficial) %> === 'T'){
+		$('.glyphicon').eq(<%= index %>).addClass('glyphicon-ok-sign');
+	}
+	$('.flag-icon').eq(<%= index %>).addClass('flag-icon-' + <%- JSON.stringify(result.Code2) %>.toLowerCase());
 <% }) %>
-	
+
+$(document).ready(function(){
+	$("#data_table").dataTable();
+});
+
+$('td a.country_name').each(function(){
+	let text = $(this).text();
+	let countryName = '';
+	for(let i = 0; i < text.length; ++i){
+		if(text[i] === '(' || text[i] ==='[') break;
+		countryName += text[i];
+	}
+	let countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
+	$(this).attr('href', countryWiki);
+})
+
+</script>
 
 
 <% include partials/footer %>

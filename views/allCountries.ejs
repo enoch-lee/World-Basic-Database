@@ -1,0 +1,61 @@
+<% include partials/header %>
+
+<% var i = 1 %>
+<div class="container">
+	<table id = 'data_table' class="table table-sm table-hover table-striped" style="width: 100%; margin: auto">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Continent</th>
+				<th>Region</th>
+        <th>SurfaceArea</th>
+        <th>IndepYear</th>
+        <th>Population</th>
+        <th>LifeExpectancy</th>
+        <th>GNP</th>
+        <th>GovernmentForm</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% results.forEach(function(result){ %>
+			<tr>
+				<td><%= i++ %></td>
+				<td><a class ="country_name" href = "" ><%= result.Name %></a></td>
+				<td><%= result.Continent %></td>
+				<td><%= result.Region %></td>
+        <td><%= result.SurfaceArea %></td>
+        <td><%= result.IndepYear %></td>
+        <td><%= result.Population %></td>
+        <td><%= result.LifeExpectancy %></td>
+        <td><%= result.GNP %></td>
+        <td><%= result.GovernmentForm %></td>
+			</tr>
+			<% }) %>
+		</tbody>
+	</table>
+	<a href='/'>Back</a>
+</div>
+
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	$("#data_table").dataTable();
+});
+
+$('td a.country_name').each(function(){
+	let text = $(this).text();
+	let countryName = '';
+	for(let i = 0; i < text.length; ++i){
+		if(text[i] === '(' || text[i] ==='[') break;
+		countryName += text[i];
+	}
+	let countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
+	$(this).attr('href', countryWiki);
+})
+
+</script>
+
+<% include partials/footer %>

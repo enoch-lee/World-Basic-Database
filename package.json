@@ -10,8 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.1",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
+    "flag-icon-css": "^2.8.0",
     "jQuery": "^1.7.4",
     "jquery": "^3.2.1",
     "jsdom": "^11.2.0",
