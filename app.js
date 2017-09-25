@@ -1,5 +1,3 @@
-
-
 require('dotenv').config();
 var bodyParser = require('body-parser'),
 	  express    = require('express'),
@@ -13,7 +11,7 @@ var connection = mysql.createConnection({
   host     : process.env.DB_HOST,
   user     : process.env.DB_USER ,
   password : process.env.DB_PWD,
-  port     : 3306,
+  port     : process.env.DB_PORT,
   database : process.env.DB_NAME
 });
 
