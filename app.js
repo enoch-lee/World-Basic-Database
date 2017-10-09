@@ -1,10 +1,8 @@
 require('dotenv').config();
 var bodyParser = require('body-parser'),
 	  express    = require('express'),
-	  mysql 	   = require('mysql'),
-		flash 		 = require('connect-flash');
-
-
+	  mysql 	   = require('mysql');
+		//flash 		 = require('connect-flash');
 
 var app = express();
 var connection = mysql.createConnection({
@@ -27,12 +25,13 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 //Declare a static directory: Important to reference css files correctly
 app.use(express.static(__dirname + '/public'));
-app.use(flash());
+//app.use(flash());
 
 app.get('/', (req, res) => {
 	res.render('landing');
 });
 
+//add a new city
 app.get('/new_city', (req, res) => {
 	res.render('new_city')
 });
@@ -51,6 +50,7 @@ app.post('/new_city', (req, res) => {
 	res.redirect('/')
 });
 
+//edit a country
 app.get('/edit/:country', (req, res) => {
 	let country = req.params.country;
 	res.render('editCountry', {country, country});
@@ -64,9 +64,10 @@ app.post('/edit/country', (req, res) => {
 		else console.log('Updated ' + req.body.name + '!');
 	});
 	//req.flash('info', 'Updated!');
-	res.redirect('/country/' + req.body.name, {message: req.flash()});
+	res.redirect('/country/' + req.body.name);
 });
 
+//delete a city
 app.get('/cities/delete', (req, res) => {
 	res.render('delete');
 });
@@ -86,6 +87,7 @@ app.post('/cities/delete', (req, res) => {
 	res.redirect('/');
 });
 
+//show all countries
 app.get('/allCountries', (req, res) => {
 	let post = res;
 	let sql = 'SELECT * FROM country ORDER BY Population DESC ';
@@ -95,6 +97,7 @@ app.get('/allCountries', (req, res) => {
 	});
 })
 
+//search a country
 app.get('/country/:country', (req, res) => {
 	let post = res;
 	let countryName = req.params.country;
@@ -116,6 +119,7 @@ app.post('/country', (req, res) => {
 	res.redirect(route);
 })
 
+//search a city
 app.get('/cities/:city', (req, res) => {
 	let post = res;
 	let cityName = req.params.city;
@@ -126,7 +130,6 @@ app.get('/cities/:city', (req, res) => {
 	let params = cityName;
 	connection.query(sql, params, (err, res) => {
 	if(err) console.log(err);
-	//if(res == '') console('empty');
 		post.render('city', {results : res});
 	});
 });
@@ -136,6 +139,7 @@ app.post('/city', (req, res) => {
 	res.redirect(route);
 });
 
+//search cities of a country
 app.post('/cities', (req, res) => {
 	let post = res;
 	let countryName = req.body.countryName;
@@ -152,6 +156,7 @@ app.post('/cities', (req, res) => {
 	});
 });
 
+//search languages
 app.get('/language/:language', (req, res) => {
 	let post = res;
 	let language = req.params.language;
@@ -162,7 +167,6 @@ app.get('/language/:language', (req, res) => {
 		let params = language;
 		connection.query(sql, params, (err, res) => {
 		if(err) console.log(err);
-		//if(res == '') console('empty');
 			post.render('language', {results : res, language : language});
 	});
 })
@@ -171,6 +175,16 @@ app.post('/language', (req, res) => {
 	let route = '/language/' + req.body.language;
 	res.redirect(route);
 });
+
+app.get('/heritage/:country', (req, res) => {
+	let post = res;
+	let countryName = req.params.country;
+	let sql = 'select * from worldheritage where CountryCode = (select Code from country where Name = ?)';
+	connection.query(sql, countryName, (err, res) => {
+		if(err) console.log(err);
+		post.render('heritage', {results : res, countryName : countryName});
+	});
+})
 
 app.listen(process.env.PORT, process.env.IP, () => {
     console.log('Demo Started');

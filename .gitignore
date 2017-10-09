@@ -1,2 +1,5 @@
 #setup environment variable
 .env
+
+#logs
+npm-debug.log

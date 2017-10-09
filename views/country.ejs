@@ -13,12 +13,13 @@
         <th>LifeExpectancy</th>
         <th>GNP</th>
         <th>GovernmentForm</th>
+				<th>Heritage</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% results.forEach(function(result){ %>
 			<tr>
-				<td><a class ="country_name" href = "" ><%= result.Name %></a></td>
+				<td><a class ="country_name" href = "" ><%= result.Name %> <span class="flag-icon"></a></td>
 				<td><%= result.Continent %></td>
 				<td><%= result.Region %></td>
         <td><%= result.SurfaceArea %></td>
@@ -27,6 +28,7 @@
         <td><%= result.LifeExpectancy %></td>
         <td><%= result.GNP %></td>
         <td><%= result.GovernmentForm %></td>
+				<td><a id = 'heritage' href = ''>World Heritage Sites</a></td>
 			</tr>
 			<% }) %>
 		</tbody>
@@ -39,6 +41,22 @@
 <script>
 	let route = '/edit/' + <%- JSON.stringify(results[0].Name) %>
 	$('#edit').attr('href', route);
+	$('#heritage').attr('href', '/heritage/' +  <%- JSON.stringify(results[0].Name) %>);
+
+	<% results.forEach(function(result, index){ %>
+		$('.flag-icon').eq(<%= index %>).addClass('flag-icon-' + <%- JSON.stringify(result.Code2) %>.toLowerCase());
+	<% }) %>
+
+	$('td a.country_name').each(function(){
+		let text = $(this).text();
+		let countryName = '';
+		for(let i = 0; i < text.length; ++i){
+			if(text[i] === '(' || text[i] ==='[') break;
+			countryName += text[i];
+		}
+		let countryWiki = 'https://en.wikipedia.org/wiki/' + countryName;
+		$(this).attr('href', countryWiki);
+	})
 </script>
 
 <% include partials/footer %>

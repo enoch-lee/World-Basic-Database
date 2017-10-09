@@ -15,13 +15,14 @@
         <th>LifeExpectancy</th>
         <th>GNP</th>
         <th>GovernmentForm</th>
+				<th>Heritage</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% results.forEach(function(result){ %>
 			<tr>
 				<td><%= i++ %></td>
-				<td><a class ="country_name" href = "" ><%= result.Name %></a></td>
+				<td><a class ="country_name" href = "" ><%= result.Name %> <span class="flag-icon"></span></a></td>
 				<td><%= result.Continent %></td>
 				<td><%= result.Region %></td>
         <td><%= result.SurfaceArea %></td>
@@ -30,6 +31,7 @@
         <td><%= result.LifeExpectancy %></td>
         <td><%= result.GNP %></td>
         <td><%= result.GovernmentForm %></td>
+				<td><a id = 'heritage' href = ''>Heritage</a></td>
 			</tr>
 			<% }) %>
 		</tbody>
@@ -44,6 +46,12 @@
 $(document).ready(function(){
 	$("#data_table").dataTable();
 });
+
+<% results.forEach(function(result, index){ %>
+	$('.flag-icon').eq(<%= index %>).addClass('flag-icon-' + <%- JSON.stringify(result.Code2) %>.toLowerCase());
+<% }) %>
+
+$('#heritage').attr('href', '/heritage/' +  <%- JSON.stringify(results[0].Name) %>);
 
 $('td a.country_name').each(function(){
 	let text = $(this).text();
