@@ -15,7 +15,6 @@
         <th>LifeExpectancy</th>
         <th>GNP</th>
         <th>GovernmentForm</th>
-				<th>Heritage</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +30,6 @@
         <td><%= result.LifeExpectancy %></td>
         <td><%= result.GNP %></td>
         <td><%= result.GovernmentForm %></td>
-				<td><a id = 'heritage' href = ''>Heritage</a></td>
 			</tr>
 			<% }) %>
 		</tbody>
@@ -50,8 +48,6 @@ $(document).ready(function(){
 <% results.forEach(function(result, index){ %>
 	$('.flag-icon').eq(<%= index %>).addClass('flag-icon-' + <%- JSON.stringify(result.Code2) %>.toLowerCase());
 <% }) %>
-
-$('#heritage').attr('href', '/heritage/' +  <%- JSON.stringify(results[0].Name) %>);
 
 $('td a.country_name').each(function(){
 	let text = $(this).text();
